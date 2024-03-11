@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AceEditor from "react-ace";
 import { Button } from "../../button";
-import { IconTidyUp, IconCopy, IconChevronDown } from "../../icon";
+import { IconTidyUp, IconCopy, IconChevronDown, IconPlay } from "../../icon";
 import "ace-builds/src-noconflict/theme-chaos";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/ext-beautify";
@@ -55,6 +55,56 @@ export const CodePanel = ({
 
   const onClickCopyCode = () => navigator.clipboard.writeText(codeContent);
 
+  const [executionResult, setExecutionResult] = useState('');
+
+
+  const onRunCode = async () => {
+    if (!codeContent.trim()) {
+      console.log("No code to run");
+      setExecutionResult("No code to run");
+      return;
+    }
+
+    //Hardcoded Token for testing REMOVE AFTER
+    const hardcodedToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4YmY1YzM3NzJkZDRlN2E3MjdhMTAxYmY1MjBmNjU3NWNhYzMyNmYiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiIzMjU1NTk0MDU1OS5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF6cCI6IjExMjE5NjUzMjA2MjIwMzQzNDIxMSIsImV4cCI6MTcxMDEyMDA2MSwiaWF0IjoxNzEwMTE2NDYxLCJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJzdWIiOiIxMTIxOTY1MzIwNjIyMDM0MzQyMTEifQ.AfqppWY2ZD3ncdkbXyEI1biwU0gkFlNRxJH-c4fyFq9TSSBnz79SkW9CBitWdZspLnf9CE3mDbcI9Kv-EuONTtL1fJSu4KhEK6nIEDSDpAFpl9vbG5xDJENDIp0Hhrwwz_pWJIi-_cwurqLyKcHlKAZ9wQeG_yP1xU0YZpoQcfs398W67v6srayTBTg9tCn2p2M1qTWkctmh0dHGpTSQ2gn5-UsmWHsBmH1oTTwNPz6jO1FUOgo5soLLOtjz4rnuKucvnhzutobC9Rsz2WcgOs7MMf5b1x8Lnl40ySr8qVi9Fypl8Yoq5G-ccwfh_P0DIFLK3bNdOGGUaAq3bUDajQ";
+  
+    // Prepare the file to be sent
+    const blob = new Blob([codeContent], { type: 'text/plain' });
+    const file = new File([blob], 'payload.py', { type: 'text/plain' });
+  
+    // Create a FormData object and append the file
+    const formData = new FormData();
+    formData.append('file', file);
+  
+    try {
+      // Get the current user's ID token
+      //const user = firebase.auth().currentUser;
+      //const idToken = user ? await user.getIdToken() : null;
+  
+      const response = await fetch('https://us-west1-phaylanx.cloudfunctions.net/repl_it', {
+        method: 'POST',
+        headers: {
+          // Add the Authorization header if your cloud function expects it
+          // Authorization: `Bearer ${idToken}`
+          'Authorization': `Bearer ${hardcodedToken}`
+        },
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const result = await response.json();
+      console.log("Execution result:", result.output);
+      setExecutionResult(result.output);
+    } catch (error) {
+      console.error('Failed to run code:', error);
+      setExecutionResult(`Error: ${error.message}`);
+    }
+  };
+
+
   return (
     <div className={styles.codePanel}>
       <header className={styles.header}>
@@ -82,10 +132,11 @@ export const CodePanel = ({
           <IconChevronDown />
         </div>
         <div className={styles.actions}>
-          <Button variant="tetriary" onClick={onClickCopyCode}>
-            <IconCopy />
-            Copy
+        <Button variant="tetriary" onClick={onRunCode}>
+            <IconPlay />
+            Run
           </Button>
+         
           <Button variant="tetriary">
             <IconTidyUp />
             Tidy Up
@@ -111,6 +162,10 @@ export const CodePanel = ({
           tabSize: 2,
         }}
       />
+    <div className={styles.executionResult}>
+      <h3>Execution Result:</h3>
+      <pre>{executionResult || "Run your code to see the results here."}</pre>
+    </div>
     </div>
   );
 };

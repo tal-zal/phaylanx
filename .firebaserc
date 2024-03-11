@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "sidecar-402a5"
-  }
+    "default": "phaylanx",
+    "staging": "phaylanx"
+  },
+  "targets": {},
+  "etags": {}
 }
