@@ -1,13 +1,35 @@
 .landing-page {
+  position: relative;
   text-align: center;
   height: 100vh;
   width: 100vw;
   display: grid;
   place-content: center;
+  background-color: #ffffff; // Background color of the landing page
+
+  .blobContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; // Ensures the blob is behind all other content
+
+    svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  > * { // This ensures that all direct children of .landing-page are above the blob
+    position: relative;
+    z-index: 1;
+  }
 
   header p {
     font-weight: 500;
-    color: var(--color-neutral-sub-text);
+    color: #ccc;
     margin-bottom: 2.5rem;
   }
 
@@ -21,6 +43,15 @@
     & > button {
       width: 18rem;
       justify-content: center;
+      background-color: #242424;
+      color: #F7AB0A;
+      border: 1px solid #F7AB0A;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: #F7AB0A;
+        color: #242424;
+      }
     }
 
     .join-room-code-input {
@@ -29,21 +60,28 @@
       align-items: center;
       justify-content: space-between;
       border-radius: 0.75rem;
-      border: 1px solid var(--color-neutral-border);
-      padding: 0 0.5rem 0 1rem;
+      background-color: #1a1a1a;
+      border: 1px solid #333333;
       height: 3.5rem;
 
       input {
         height: 100%;
         width: 100%;
         border: none;
+        background-color: transparent;
         font-family: "Plus Jakarta Sans", sans-serif;
-        color: var(--color-neutral-sub-text);
+        color: #ccc;
         font-size: 0.88rem;
 
         &:focus,
         &:active {
           outline: none;
+          color: #F7AB0A;
+          border-bottom: 2px solid #F7AB0A;
+        }
+
+        &::placeholder {
+          color: #777;
         }
       }
     }
