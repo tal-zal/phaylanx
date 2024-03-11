@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
+import { useNavigate } from 'react-router-dom';
 import 'firebase/compat/auth';
 import "./login.css";
+
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const navigate = useNavigate();
 
   // Initialize Firebase only once upon first page view
   useEffect(() => {
@@ -39,6 +43,7 @@ export const LoginPage = () => {
       .then((result) => {
         // Handle successful login
         console.log('Google login successful:', result);
+        navigate('/home');
       })
       .catch((error) => {
         // Handle errors

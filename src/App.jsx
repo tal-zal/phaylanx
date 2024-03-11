@@ -11,6 +11,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<LandingPage/>} />
         <Route path="/room/:id" element={<RoomPage />} />
       </Routes>
     </Router>
