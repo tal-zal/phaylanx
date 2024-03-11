@@ -1,4 +1,4 @@
-import { RoomPage, LandingPage } from "./components";
+import { RoomPage, LandingPage, LoginPage } from "./components";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,7 +10,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/room/:id" element={<RoomPage />} />
       </Routes>
     </Router>
