@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import * as firebase from 'firebase/app'; // Import Firebase
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import "./login.css";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -8,25 +10,30 @@ export const LoginPage = () => {
 
   // Initialize Firebase only once upon first page view
   useEffect(() => {
+    
+    const firebaseConfig = {
+      apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+      authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+      projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+      storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+      appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    };
+
     // Check if Firebase is not already initialized
-    // if (!firebase.apps.length) {
-      const firebaseConfig = {
-        apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-        authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-        // databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-        projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-        storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-        messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-        appId: import.meta.env.VITE_FIREBASE_APP_ID,
-        // measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
-      };
-      
-      // Initialize Firebase
+    if (!firebase.apps || !firebase.apps.length) {
+      console.log("Init firebase successfully.");
       firebase.initializeApp(firebaseConfig);
-    // }
+    }
   }, []);
 
   const handleGoogleLogin = () => {
+    // Check if Firebase is initialized
+    if (!firebase.auth) {
+      console.error('Firebase is not initialized');
+      return;
+    }
+
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
@@ -62,15 +69,12 @@ export const LoginPage = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <button onClick={handleGoogleLogin}>Login with Google</button>
-      <div>
-        <input type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
-        <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-        <button onClick={handleEmailLogin}>Login with Email</button>
+    <div className="login-page-hero">
+      <div className="login-container">
+        <h2 className="login-title">Login To Phalynx.io</h2>
+        <button className="button" onClick={handleGoogleLogin}>Login with Google</button>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
       </div>
-      {errorMessage && <p>{errorMessage}</p>}
     </div>
   );
 };
