@@ -1,7 +1,7 @@
 {
   "projects": {
     "default": "phaylanx",
-    "staging": "phaylanx"
+    "staging": "phaylynx-test"
   },
   "targets": {},
   "etags": {}

@@ -1,10 +1,16 @@
 import { LogoBig } from "./logo-big";
+import {Logo} from "./logo";
+import { Blob } from "./blob1";
 import { IconSparkle, IconCheck } from "../icon";
 import { Button } from "../button";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./style.module.scss";
 import { useState } from "react";
+
+<script src="
+https://cdn.jsdelivr.net/npm/kute.js@2.2.4/dist/kute.min.js
+"></script>
 
 export const LandingPage = () => {
   const [codeInput, setCodeInput] = useState("");
@@ -35,11 +41,18 @@ export const LandingPage = () => {
   };
 
   return (
-    <div className={styles.landingPage}>
+    
+    
+    <div className={styles.landingPage}> 
+        <div className={styles.blobContainer}>
+    <Blob/>
+    </div>
       <header>
-        <LogoBig />
+  
+        <LogoBig/>
         <p>Code alongside friends, colleagues, and ChatGPT</p>
       </header>
+      
       <div className={styles.actions}>
         <Button size="big" onClick={onClickCreateRoom}>
           <IconSparkle />
@@ -47,6 +60,7 @@ export const LandingPage = () => {
         </Button>
         <p>or</p>
         <div className={styles.joinRoomCodeInput}>
+          
           <input
             type="text"
             placeholder="Enter code"
@@ -58,6 +72,7 @@ export const LandingPage = () => {
             <IconCheck />
             Join Room
           </Button>
+          
         </div>
       </div>
     </div>
