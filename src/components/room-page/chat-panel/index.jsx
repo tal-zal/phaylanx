@@ -41,23 +41,35 @@ export const ChatPanel = ({
   };
 
   const onClickSendToChatGPT = async () => {
-    const response = await getGPTResponse(
-      inputValue,
-      codeContent,
-      language,
-      setChatGPTResponse
-    );
+    if (!inputValue.trim()) {
+      return; // Don't send empty messages.
+    }
+  
+    try {
+      // Get response from GPT-3 based on user input.
+      const response = await getGPTResponse(inputValue, codeContent, language);
+      console.log(response);
+      const messageText = response.output;
+  
+      // Push the user's question to Firebase.
+      push(ref(database, date + "/" + id + "/messages/"), {
+        message: inputValue,
+        username,
+      });
+  
+      // Push GPT-3's response to Firebase.
+      push(ref(database, date + "/" + id + "/messages/"), {
+        message: response.output,
+        username: "ChatGPT",
+        from: "ai",
+      });
+      
+      // Clear the input box.
+      setInputValue("");
+    } catch (error) {
+      console.error("Error sending message to ChatGPT:", error);
 
-    push(ref(database, date + "/" + id + "/messages/"), {
-      message: inputValue,
-      username,
-    });
-    push(ref(database, date + "/" + id + "/messages/"), {
-      message: response,
-      username: "ChatGPT",
-      from: "ai",
-    });
-    setInputValue("");
+    }
   };
 
   // This sets the initial listener for the database code

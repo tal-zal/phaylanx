@@ -19,9 +19,6 @@ export const HeaderNav = ({ showChat, setShowChat }) => {
   return (
     <>
       <header className={styles.header}>
-        <Link to="/">
-          <Logo />
-        </Link>
         <label className={styles.menuIcon} htmlFor="menuIconCheckbox">
           <IconMenu />
         </label>

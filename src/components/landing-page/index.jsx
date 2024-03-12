@@ -1,16 +1,20 @@
 import { LogoBig } from "./logo-big";
-import {Logo} from "./logo";
+import { Logo } from "./logo";
 import { Blob } from "./blob1";
 import { IconSparkle, IconCheck } from "../icon";
 import { Button } from "../button";
 import { useNavigate } from "react-router-dom";
+import { Wave } from "./wave";
+import { Wave2 } from "./wave2";
 
 import styles from "./style.module.scss";
 import { useState } from "react";
 
-<script src="
+<script
+  src="
 https://cdn.jsdelivr.net/npm/kute.js@2.2.4/dist/kute.min.js
-"></script>
+"
+></script>;
 
 export const LandingPage = () => {
   const [codeInput, setCodeInput] = useState("");
@@ -41,18 +45,23 @@ export const LandingPage = () => {
   };
 
   return (
-    
-    
-    <div className={styles.landingPage}> 
-        <div className={styles.blobContainer}>
-    <Blob/>
-    </div>
+    <div className={styles.landingPage}>
+      <div className={styles.lowerMargin}></div>
+      <div className={styles.upperMargin}></div>
+      <div className={styles.waveContainer2}>
+        <Wave2 />
+      </div>
+
+      <div className={styles.waveContainer}>
+        <Wave />
+      </div>
+
       <header>
-  
-        <LogoBig/>
+        <Logo />
+
         <p>Code alongside friends, colleagues, and ChatGPT</p>
       </header>
-      
+
       <div className={styles.actions}>
         <Button size="big" onClick={onClickCreateRoom}>
           <IconSparkle />
@@ -60,7 +69,6 @@ export const LandingPage = () => {
         </Button>
         <p>or</p>
         <div className={styles.joinRoomCodeInput}>
-          
           <input
             type="text"
             placeholder="Enter code"
@@ -72,7 +80,6 @@ export const LandingPage = () => {
             <IconCheck />
             Join Room
           </Button>
-          
         </div>
       </div>
     </div>

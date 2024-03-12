@@ -66,7 +66,7 @@ export const CodePanel = ({
     }
 
     //Hardcoded Token for testing REMOVE AFTER
-    const hardcodedToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4YmY1YzM3NzJkZDRlN2E3MjdhMTAxYmY1MjBmNjU3NWNhYzMyNmYiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiIzMjU1NTk0MDU1OS5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF6cCI6IjExMjE5NjUzMjA2MjIwMzQzNDIxMSIsImV4cCI6MTcxMDEyMDA2MSwiaWF0IjoxNzEwMTE2NDYxLCJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJzdWIiOiIxMTIxOTY1MzIwNjIyMDM0MzQyMTEifQ.AfqppWY2ZD3ncdkbXyEI1biwU0gkFlNRxJH-c4fyFq9TSSBnz79SkW9CBitWdZspLnf9CE3mDbcI9Kv-EuONTtL1fJSu4KhEK6nIEDSDpAFpl9vbG5xDJENDIp0Hhrwwz_pWJIi-_cwurqLyKcHlKAZ9wQeG_yP1xU0YZpoQcfs398W67v6srayTBTg9tCn2p2M1qTWkctmh0dHGpTSQ2gn5-UsmWHsBmH1oTTwNPz6jO1FUOgo5soLLOtjz4rnuKucvnhzutobC9Rsz2WcgOs7MMf5b1x8Lnl40ySr8qVi9Fypl8Yoq5G-ccwfh_P0DIFLK3bNdOGGUaAq3bUDajQ";
+    const hardcodedToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4YmY1YzM3NzJkZDRlN2E3MjdhMTAxYmY1MjBmNjU3NWNhYzMyNmYiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiIzMjU1NTk0MDU1OS5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF6cCI6IjExMjE5NjUzMjA2MjIwMzQzNDIxMSIsImV4cCI6MTcxMDE5NTE2MCwiaWF0IjoxNzEwMTkxNTYwLCJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJzdWIiOiIxMTIxOTY1MzIwNjIyMDM0MzQyMTEifQ.m0CeD9X4NiaQ1QVHYUpNI1ERlwzOkMXJ54OO47PEn0-wn7sOQSUvltnwoksNphGgoyw_ZhN50oZ7X1Wwdn_Y7bZpYXLFB1MMBtc5BVB4msp96ZH68V_cqU3CzuV5nZ_ka_5JK3uneHtcRd8UzZ1CYYxicLPWS7vtgHfOCB7YGm-4o-9bdPG-E3KXapj3HaBhhjDKcKvMdkRwj4P7IMAuvN_6gk2K-HJpblAkBkVApqgydbNUm-22c3GPSHY9s79XTsISgvv1h0Sl_L6o-t80YZwt1YmK34mhbcwr1lDlOp9VgM8GIi4AdcirxL_vOW2RhaIDcq8KFn3NO5THHt-vng";
   
     // Prepare the file to be sent
     const blob = new Blob([codeContent], { type: 'text/plain' });
@@ -81,7 +81,7 @@ export const CodePanel = ({
       //const user = firebase.auth().currentUser;
       //const idToken = user ? await user.getIdToken() : null;
   
-      const response = await fetch('https://us-west1-phaylanx.cloudfunctions.net/repl_it', {
+      const response = await fetch('https://us-west1-phaylanx.cloudfunctions.net/run_python', {
         method: 'POST',
         headers: {
           // Add the Authorization header if your cloud function expects it
@@ -115,19 +115,7 @@ export const CodePanel = ({
               setLanguage(ev.target.value);
             }}
           >
-            <option value="html">HTML</option>
-            <option value="xml">XML</option>
-            <option value="css">CSS</option>
-            <option value="sass">Sass</option>
-            <option value="javascript">JavaScript</option>
-            <option value="typescript">TypeScript</option>
             <option value="python">Python</option>
-            <option value="django">Django</option>
-            <option value="java">Java</option>
-            <option value="kotlin">Kotlin</option>
-            <option value="c_cpp">C/C++</option>
-            <option value="ruby">Ruby</option>
-            <option value="php">PHP</option>
           </select>
           <IconChevronDown />
         </div>
