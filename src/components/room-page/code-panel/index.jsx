@@ -80,7 +80,9 @@ export const CodePanel = ({
       //const user = firebase.auth().currentUser;
       //const idToken = user ? await user.getIdToken() : null;
   
-      const response = await fetch('https://us-west1-phaylanx.cloudfunctions.net/run_python', {
+      const pythonURL = import.meta.env.VITE_CLOUD_PYTHONRUN_URL;
+
+      const response = await fetch(pythonURL, {
         method: 'POST',
         body: formData
       });

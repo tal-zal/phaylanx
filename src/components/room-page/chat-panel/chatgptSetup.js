@@ -1,8 +1,12 @@
 
 
 export const getGPTResponse = async (inputText, codeContent, language) => {
-  const endpoint = "https://us-west1-phaylanx.cloudfunctions.net/gpt_service-Pub";
+  // const endpoint = import.meta.env.VITE_CLOUD_CHATGPT_URL;
+
+  const endpoint = import.meta.env.VITE_CLOUD_CHATGPT_URL;
   
+  // console.log(endpoint);
+
   try {
     const payload = {
       prompt: `${inputText}\n\nLanguage: ${language}\n\nCode: ${codeContent}`,
