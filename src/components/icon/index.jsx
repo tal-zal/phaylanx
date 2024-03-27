@@ -7,3 +7,4 @@ export { IconQRCode } from "./icon-qr-code";
 export { IconCheck } from "./icon-check";
 export { IconSparkle } from "./icon-sparkle";
 export { IconMenu } from "./icon-menu";
+export {IconEmail} from "./icon-email";

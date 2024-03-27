@@ -1,7 +1,7 @@
 
 
 export const getGPTResponse = async (inputText, codeContent, language) => {
-  const endpoint = "https://us-west1-phaylanx.cloudfunctions.net/gpt_service-Pub";
+  const endpoint = "https://us-west1-phaylanx-harsha.cloudfunctions.net/gpt-service-pub";
   
   try {
     const payload = {
