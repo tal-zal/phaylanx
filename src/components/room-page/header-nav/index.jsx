@@ -9,12 +9,18 @@ import styles from "./styles.module.scss";
 import { useState } from "react";
 
 export const HeaderNav = ({ showChat, setShowChat }) => {
+  const [showSupportModal, setShowSupportModal] = useState(false);
   const [showQRCodeModal, setShowQRCodeModal] = useState(false);
   const { id } = useParams();
 
   const onClickCopyCode = () => navigator.clipboard.writeText(id);
 
   const onClickToggleChat = () => setShowChat(!showChat);
+
+  const handleEmailButtonClick = () => {
+    setShowSupportModal(true); 
+    console.log("Email button clicked!");
+  };
 
   return (
     <>
@@ -36,12 +42,18 @@ export const HeaderNav = ({ showChat, setShowChat }) => {
             <IconLink />
             Copy Room Code
           </Button>
+          <Button onClick={handleEmailButtonClick}>
+            Contact Us
+          </Button>
           <Button onClick={onClickToggleChat} className={styles.toggleChatBtn}>
             <IconSparkle />
             Toggle Chat
           </Button>
         </div>
       </header>
+      {showSupportModal && (
+        <SupportModal setShowSupportModal={setShowSupportModal} />
+      )}
       {showQRCodeModal && (
         <QRCodeModal setShowQRCodeModal={setShowQRCodeModal} />
       )}
@@ -109,6 +121,75 @@ const QRCodeModal = ({ setShowQRCodeModal }) => {
         <h1>Scan the QR code to join the room</h1>
         <img src={QRCodePNG} alt="QR Code" />
       </div>
+    </div>
+  );
+};
+
+// SupportModal Component
+const SupportModal = ({ setShowSupportModal }) => {
+  console.log("SupportModal rendered");
+  const [subject, setSubject] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const ticketContent = `Subject: ${subject}\nDescription: ${description}`;
+
+    try {
+      const response = await fetch(
+        "https://us-central1-phaylanx-harsha.cloudfunctions.net/support_ticket-pub", 
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+         
+          body: JSON.stringify({ ticket: ticketContent }),
+        }
+      );
+
+      if (response.ok) {
+        alert("Your message has been sent to support.");
+        setShowSupportModal(false); 
+      } else {
+        const errorData = await response.json(); 
+        alert(`Error sending message: ${errorData.error || "Please try again."}`);
+      }
+    } catch (error) {
+      console.error("Error submitting support ticket:", error);
+      alert("Network error. Please try again.");
+    }
+  };
+
+  return (
+    <div className={styles.supportModal}>
+      <form onSubmit={handleSubmit}>
+        <h2>Contact Support</h2>
+        <label>
+          Subject:
+          <input
+            type="text"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Please provide a brief description of the issue:
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </label>
+        <div>
+          <button type="submit">Send</button>
+          <button type="button" onClick={() => setShowSupportModal(false)}>
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
