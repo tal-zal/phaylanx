@@ -19,12 +19,15 @@ export const HeaderNav = ({ showChat, setShowChat }) => {
   return (
     <>
       <header className={styles.header}>
+        <Link to="/">
+          <Logo/>
+        </Link>
         <label className={styles.menuIcon} htmlFor="menuIconCheckbox">
           <IconMenu />
         </label>
         <input type="checkbox" id="menuIconCheckbox" />
         <div className={styles.actions}>
-          <UserAvatarList users={["Frodo", "Sam"]} />
+          {/* <UserAvatarList users={["Frodo", "Sam"]} /> */}
           <Button variant="tetriary" onClick={() => setShowQRCodeModal(true)}>
             <IconQRCode />
             Show QR Code

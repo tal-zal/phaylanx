@@ -76,7 +76,7 @@ export const LoginPage = () => {
   return (
     <div className="login-page-hero">
       <div className="login-container">
-        <h2 className="login-title">Login To Phalynx.io</h2>
+        <h2 className="login-title">Login To Phaylanx.io</h2>
         <button className="button" onClick={handleGoogleLogin}>Login with Google</button>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </div>
