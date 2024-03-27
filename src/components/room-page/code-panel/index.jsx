@@ -66,7 +66,6 @@ export const CodePanel = ({
     }
 
     //Hardcoded Token for testing REMOVE AFTER
-    const hardcodedToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4YmY1YzM3NzJkZDRlN2E3MjdhMTAxYmY1MjBmNjU3NWNhYzMyNmYiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiIzMjU1NTk0MDU1OS5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF6cCI6IjExMjE5NjUzMjA2MjIwMzQzNDIxMSIsImV4cCI6MTcxMDE5NTE2MCwiaWF0IjoxNzEwMTkxNTYwLCJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJzdWIiOiIxMTIxOTY1MzIwNjIyMDM0MzQyMTEifQ.m0CeD9X4NiaQ1QVHYUpNI1ERlwzOkMXJ54OO47PEn0-wn7sOQSUvltnwoksNphGgoyw_ZhN50oZ7X1Wwdn_Y7bZpYXLFB1MMBtc5BVB4msp96ZH68V_cqU3CzuV5nZ_ka_5JK3uneHtcRd8UzZ1CYYxicLPWS7vtgHfOCB7YGm-4o-9bdPG-E3KXapj3HaBhhjDKcKvMdkRwj4P7IMAuvN_6gk2K-HJpblAkBkVApqgydbNUm-22c3GPSHY9s79XTsISgvv1h0Sl_L6o-t80YZwt1YmK34mhbcwr1lDlOp9VgM8GIi4AdcirxL_vOW2RhaIDcq8KFn3NO5THHt-vng";
   
     // Prepare the file to be sent
     const blob = new Blob([codeContent], { type: 'text/plain' });
@@ -83,12 +82,7 @@ export const CodePanel = ({
   
       const response = await fetch('https://us-west1-phaylanx.cloudfunctions.net/run_python', {
         method: 'POST',
-        headers: {
-          // Add the Authorization header if your cloud function expects it
-          // Authorization: `Bearer ${idToken}`
-          'Authorization': `Bearer ${hardcodedToken}`
-        },
-        body: formData,
+        body: formData
       });
   
       if (!response.ok) {
