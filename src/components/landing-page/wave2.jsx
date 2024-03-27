@@ -14,7 +14,7 @@ export const Wave2 = () => {
     >
       <rect x="0" y="0" width="900" height="250" fill="#FFFF"></rect>
       <motion.path
-        fill="#6666FF"
+        fill="#F1F3F9"
         initial={{ d: wavePath1 }}
         animate={{ d: [wavePath1, wavePath2, wavePath1] }}
         transition={{
