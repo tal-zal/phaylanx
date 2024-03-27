@@ -1,6 +1,13 @@
 import { Logo } from "./Logo";
 import { Button } from "../../button";
-import { IconLink, IconQRCode, IconMenu, IconSparkle, IconCopy, IconEmail } from "../../icon";
+import {
+  IconLink,
+  IconQRCode,
+  IconMenu,
+  IconSparkle,
+  IconCopy,
+  IconEmail,
+} from "../../icon";
 import { ChatGPTUserIcon } from "./chat-gpt-user-icon";
 import { useParams, Link } from "react-router-dom";
 import QRCodePNG from "./qr-code.png";
@@ -18,7 +25,7 @@ export const HeaderNav = ({ showChat, setShowChat }) => {
   const onClickToggleChat = () => setShowChat(!showChat);
 
   const handleEmailButtonClick = () => {
-    setShowSupportModal(true); 
+    setShowSupportModal(true);
     console.log("Email button clicked!");
   };
 
@@ -125,33 +132,38 @@ const QRCodeModal = ({ setShowQRCodeModal }) => {
 
 // SupportModal Component
 const SupportModal = ({ setShowSupportModal }) => {
-  console.log("SupportModal rendered"); 
+  console.log("SupportModal rendered");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
+
+    const ticketContent = `Subject: ${subject}\nDescription: ${description}`;
 
     try {
-      const response = await fetch('CLOUD_FUNCTION_URL', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ subject, description }),
-      });
+      const response = await fetch(
+        "https://us-central1-phaylanx-harsha.cloudfunctions.net/support_ticket-pub", 
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+         
+          body: JSON.stringify({ ticket: ticketContent }),
+        }
+      );
 
       if (response.ok) {
-        
-        alert('Your message has been sent to support.');
-        setShowSupportModal(false); // Close the modal
+        alert("Your message has been sent to support.");
+        setShowSupportModal(false); 
       } else {
-  
-        alert('There was an error sending your message. Please try again.');
+        const errorData = await response.json(); 
+        alert(`Error sending message: ${errorData.error || "Please try again."}`);
       }
     } catch (error) {
-     
-      alert('Network error. Please try again.');
+      console.error("Error submitting support ticket:", error);
+      alert("Network error. Please try again.");
     }
   };
 
@@ -178,7 +190,9 @@ const SupportModal = ({ setShowSupportModal }) => {
         </label>
         <div>
           <button type="submit">Send</button>
-          <button type="button" onClick={() => setShowSupportModal(false)}>Cancel</button>
+          <button type="button" onClick={() => setShowSupportModal(false)}>
+            Cancel
+          </button>
         </div>
       </form>
     </div>
