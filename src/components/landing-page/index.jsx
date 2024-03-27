@@ -57,7 +57,7 @@ export const LandingPage = () => {
       </div>
 
       <header>
-        <Logo />
+        <LogoBig />
 
         <p>Code alongside friends, colleagues, and ChatGPT</p>
       </header>
