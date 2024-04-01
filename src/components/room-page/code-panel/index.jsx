@@ -55,8 +55,7 @@ export const CodePanel = ({
 
   const onClickCopyCode = () => navigator.clipboard.writeText(codeContent);
 
-  const [executionResult, setExecutionResult] = useState('');
-
+  const [executionResult, setExecutionResult] = useState("");
 
   const onRunCode = async () => {
     if (!codeContent.trim()) {
@@ -66,40 +65,39 @@ export const CodePanel = ({
     }
 
     //Hardcoded Token for testing REMOVE AFTER
-  
+
     // Prepare the file to be sent
-    const blob = new Blob([codeContent], { type: 'text/plain' });
-    const file = new File([blob], 'payload.py', { type: 'text/plain' });
-  
+    const blob = new Blob([codeContent], { type: "text/plain" });
+    const file = new File([blob], "payload.py", { type: "text/plain" });
+
     // Create a FormData object and append the file
     const formData = new FormData();
-    formData.append('file', file);
-  
+    formData.append("file", file);
+
     try {
       // Get the current user's ID token
       //const user = firebase.auth().currentUser;
       //const idToken = user ? await user.getIdToken() : null;
-  
+
       const pythonURL = import.meta.env.VITE_CLOUD_PYTHONRUN_URL;
 
       const response = await fetch(pythonURL, {
-        method: 'POST',
-        body: formData
+        method: "POST",
+        body: formData,
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const result = await response.json();
       console.log("Execution result:", result.output);
       setExecutionResult(result.output);
     } catch (error) {
-      console.error('Failed to run code:', error);
+      console.error("Failed to run code:", error);
       setExecutionResult(`Error: ${error.message}`);
     }
   };
-
 
   return (
     <div className={styles.codePanel}>
@@ -116,11 +114,11 @@ export const CodePanel = ({
           <IconChevronDown />
         </div>
         <div className={styles.actions}>
-        <Button variant="tetriary" onClick={onRunCode}>
+          <Button variant="tetriary" onClick={onRunCode}>
             <IconPlay />
             Run
           </Button>
-         
+
           <Button variant="tetriary">
             <IconTidyUp />
             Tidy Up
@@ -146,10 +144,16 @@ export const CodePanel = ({
           tabSize: 2,
         }}
       />
-    <div className={styles.executionResult}>
-      <h3>Execution Result:</h3>
-      <pre>{executionResult || "Run your code to see the results here."}</pre>
-    </div>
+      <div className={styles.executionResult}>
+        
+        <div className={styles.terminalLine}>
+          <pre>
+          <div className={styles.greenArrow}></div>
+            {executionResult || "Run your code to see the results here."}
+          </pre>
+          <div className={styles.cursor}></div>
+        </div>
+      </div>
     </div>
   );
 };

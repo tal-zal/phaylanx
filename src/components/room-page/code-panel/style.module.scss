@@ -35,21 +35,74 @@
 }
 
 .executionResult {
+  background-color: #292c36;
+  color: #dcdcdc;
+  font-family: "Courier New", Courier, monospace;
+  padding: 20px;
+  border-radius: 4px;
   margin-top: 20px;
-  padding: 10px;
-  background-color: #f4f4f4;
-  border-left: 5px solid #0078d4;
+  position: relative;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
 
-  h3 {
+  &:before {
+    content: "▶ "; /* This is a triangle symbol that resembles an arrow */
+    color: #33cc33; /* Green color for the arrow */
+    font-weight: bold; /* Make the arrow a bit bolder */
+    margin-right: 0.5rem; /* Space between the arrow and the text */
+    display: inline; /* Make the arrow inline with the text */
+  }
+
+  &:before {
+    content: "Execution@phaylanx:~$";
+    display: block;
     margin-bottom: 10px;
   }
 
   pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    position: relative; /* Position relative for pseudo-elements */
+    &:before {
+      content: "▶"; /* Unicode for the arrow */
+      color: #33cc33; /* Green color for the arrow */
+      font-weight: bold; /* Bold for the arrow */
+      margin-right: 5px; /* Space between the arrow and the output text */
+      display: inline; /* Inline with the output text */
+    }
+  }
+
+  h3 {
+    color: #dcdcdc;
+    margin-bottom: 15px;
+  }
+
+  .terminalLine {
+    display: flex;
+    align-items: center;
+
+    .greenArrow {
+      content: "▶ "; /* This is a triangle symbol that resembles an arrow */
+      color: #33cc33; /* Green color for the arrow */
+      font-weight: bold; /* Make the arrow a bit bolder */
+      margin-right: 0.5rem; /* Space between the arrow and the text */
+      display: inline; /* Make the arrow inline with the text */
+    }
+
+    .cursor {
+      width: 8px;
+      height: 18px;
+      background-color: #dcdcdc;
+      animation: blink-animation 1.2s steps(5, start) infinite;
+      margin-left: 5px;
+    }
+
+    @keyframes blink-animation {
+      to {
+        visibility: hidden;
+      }
+    }
   }
 }
-
 
 .language-select {
   display: flex;
