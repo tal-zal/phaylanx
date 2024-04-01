@@ -138,7 +138,7 @@ const SupportModal = ({ setShowSupportModal }) => {
 
     try {
       const response = await fetch(
-        "https://us-central1-phaylanx-harsha.cloudfunctions.net/support_ticket-pub", 
+        import.meta.env.VITE_CLOUD_SUPPORTTICKET_URL, 
         {
           method: "POST",
           headers: {
